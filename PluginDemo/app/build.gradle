@@ -1,0 +1,45 @@
+apply plugin: 'com.android.application'
+//使用cooker-plugin
+apply plugin: 'cooker-plugin'
+
+buildscript {
+    repositories {
+        maven {
+            //cooker-plugin 所在的仓库
+            //这里是发布在本地文件夹了
+            url uri('../release')
+        }
+    }
+    dependencies {
+        //引入cooker-plugin
+        classpath 'com.helen.plugin:cooker-plugin:1.0'
+    }
+}
+
+android {
+    compileSdkVersion 23
+    buildToolsVersion "23.0.3"
+    defaultConfig {
+        applicationId "com.helen.plugindemo"
+        minSdkVersion 14
+        targetSdkVersion 23
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    compile 'com.android.support:appcompat-v7:23.3.0'
+    testCompile 'junit:junit:4.12'
+}

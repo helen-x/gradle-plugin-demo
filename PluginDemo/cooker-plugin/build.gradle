@@ -1,0 +1,26 @@
+apply plugin: 'groovy'
+//添加maven plugin, 用于发布我们的jar
+apply plugin: 'maven'
+
+dependencies {
+    compile gradleApi()
+    compile localGroovy()
+}
+
+repositories {
+    mavenCentral()
+}
+
+//设置maven deployer
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            //设置插件的GAV参数
+            pom.groupId = 'com.helen.plugin'
+            pom.artifactId = 'cooker-plugin'
+            pom.version = 1.0
+            //文件发布到下面目录
+            repository(url: uri('../release'))
+        }
+    }
+}
